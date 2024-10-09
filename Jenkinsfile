@@ -5,7 +5,7 @@ pipeline {
     options {
         timeout(time: 30, unit: 'MINUTES') 
         disableConcurrentBuilds()
-
+    }
     stages {
         stage('Init') {
             steps {
@@ -38,5 +38,4 @@ pipeline {
             echo 'I will run only when pipeline is failure'
         }
       }
-    }
 }
