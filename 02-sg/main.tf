@@ -134,6 +134,16 @@ resource "aws_security_group_rule" "backend_vpn_http" {
   security_group_id = module.backend.sg_id
 }
 
+# added as a part of jenkins CICD
+resource "aws_security_group_rule" "backend_default_vpc" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks = ["172.31.0.0/16"] # source refers to where you getting traffic from i..e sg(expense-dev-frontend)
+  security_group_id = module.backend.sg_id
+}
+
 
 # frontend is accepting connections from public
 # allowing only 80 port traffic of frontend from public
@@ -170,6 +180,15 @@ resource "aws_security_group_rule" "frontend_vpn" {
   to_port           = 22
   protocol          = "tcp"
   source_security_group_id = module.vpn.sg_id # source is where you are getting traffic from
+  security_group_id = module.frontend.sg_id
+}
+
+resource "aws_security_group_rule" "frontend_default_vpc" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks = ["172.31.0.0/16"] # source refers to where you getting traffic from public
   security_group_id = module.frontend.sg_id
 }
 
