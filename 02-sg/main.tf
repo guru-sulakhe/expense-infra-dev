@@ -64,7 +64,7 @@ module "vpn"{
     sg_description = "security group for VPN instances"
     vpc_id = data.aws_ssm_parameter.vpc_id.value
     common_tags = var.common_tags
-    ingress_rules = var.vpn_sg_rules
+    ingress_rules = var.vpn_sg_rules #this refers to the vpn ingress rules which are mentioned in variables.tf
     sg_name = "vpn"
 }
 
