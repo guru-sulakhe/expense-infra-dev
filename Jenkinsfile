@@ -65,7 +65,7 @@ pipeline {
         post { 
         always { 
             echo 'I will always say Hello again!'
-            deleteDir()
+            deleteDir() //this will delete the workspace folder in the jenkins-agent server if the build is sucess
         }
         success { 
             echo 'I will run only when pipeline is success'
