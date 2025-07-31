@@ -1,3 +1,16 @@
+# Here we are following an order for creating scalable backend server
+# 1. Create EC2 instance backend server
+# 2. Connect to the backend server using null resource and remote exec.
+# 3. Copy the script into instance using provisioner "file" {}
+# 4. Run Ansible Configuration
+# 5. Capture AMI from the running EC2 instance backend server
+# 6. Terminating Backend Server after capturing AMI 
+# 7. Creating TargetGroup for HealthChecks 
+# 8. Creating Launch Template with the Caputured AMI from the backend server
+# 9. Creating Auto Scaling Group with the TargetGroup
+# 10. Creating Auto Scaling policy
+# 11. Creating Listener Rule for app-alb Load Balancer TargetGroup of backend server 
+
 module "backend" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   
