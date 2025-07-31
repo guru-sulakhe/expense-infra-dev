@@ -110,6 +110,7 @@ resource "aws_lb_target_group" "backend" {
 }
 
 # creating launch template based on the AMI image ID
+# Based on the launch template autoscaling group will be created, which will create multiple desired EC2 instances with the launch template configurations.
 resource "aws_launch_template" "backend" {
   name = "${var.project_name}-${var.environment}-${var.common_tags.Component}"
 
