@@ -24,19 +24,19 @@ resource "null_resource" "backend" {
       instance_id = module.backend.id # this will be triggered everytime instance is created
     }
 
-    connection { # connecting to backend server
+    connection { # connecting to backend EC2 server
         type     = "ssh"
         user     = "ec2-user"
         password = "DevOps321"
         host     = module.backend.private_ip
     }
 
-    provisioner "file" { # copying backend.sh file into server
+    provisioner "file" { # copying backend.sh file to AWS EC2 server
         source      = "${var.common_tags.Component}.sh"
         destination = "/tmp/${var.common_tags.Component}.sh"
     }
 
-    provisioner "remote-exec" { 
+    provisioner "remote-exec" { #Running backend.sh script inside the EC2 server
         inline = [
             "chmod +x /tmp/${var.common_tags.Component}.sh",
             "sudo sh /tmp/${var.common_tags.Component}.sh ${var.common_tags.Component} ${var.environment}"
