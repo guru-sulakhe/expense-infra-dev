@@ -34,7 +34,7 @@ resource "aws_lb_listener" "front_end" {
   }
 }
 
-resource "aws_lb_listener" "https" {
+resource "aws_lb_listener" "https" { #creating load balancer listener rule for the HTTPS ACM certificate
   load_balancer_arn = aws_lb.web_alb.arn
   port              = "443"
 
