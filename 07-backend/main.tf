@@ -86,8 +86,8 @@ resource "null_resource" "backend_delete" {
         host     = module.backend.private_ip
     }
 
-    provisioner "local-exec" {
-        command = "aws ec2 terminate-instances --instance-ids ${module.backend.id}"
+    provisioner "local-exec" { #Terminating backend-server EC2 instance by AWS CLI Commands
+      command = "aws ec2 terminate-instances --instance-ids ${module.backend.id}"
     }
     depends_on = [aws_ami_from_instance.backend] 
 }
@@ -143,18 +143,18 @@ resource "aws_autoscaling_group" "bar" {
   health_check_type         = "ELB"
   desired_capacity          = 1 # 1 instance
   target_group_arns = [aws_lb_target_group.backend.arn] # deploying  backend instance target group
-    launch_template {
-    id      = aws_launch_template.backend.id
+    launch_template { #AutoScaling will take latest version 
+    id      = aws_launch_template.backend.id #your launch template ID
     version = "$Latest"
   }
-  vpc_zone_identifier       = split(",", data.aws_ssm_parameter.private_subnet_ids.value)
+  vpc_zone_identifier       = split(",", data.aws_ssm_parameter.private_subnet_ids.value) #Selecting two private subnet ids
 
     instance_refresh {
-    strategy = "Rolling"
+    strategy = "Rolling" # Old instances will be deleted and new instances will be created
     preferences {
       min_healthy_percentage = 50
     }
-    triggers = ["launch_template"]
+    triggers = ["launch_template"] # This will be triggered only when launch template is created
   }
 
   tag {
@@ -197,7 +197,7 @@ resource "aws_lb_listener_rule" "static" {
   priority     = 100 # less number will be validated first
 
   action {
-    type             = "forward"
+    type             = "forward" #request will be forwarded to the respective Target Group
     target_group_arn = aws_lb_target_group.backend.arn
   }
 
