@@ -1,6 +1,6 @@
 resource "aws_lb" "app_alb" {
   name               = "${var.project_name}-${var.environment}-app-alb"
-  internal           = true # because it is a private load balancer
+  internal           = true # because it is a private load balancer, if it is public load balancer change it as false
   load_balancer_type = "application"
   security_groups    = [data.aws_ssm_parameter.app_alb_sg_id.value]
   subnets            = split("," ,data.aws_ssm_parameter.private_subnet_ids.value) # for APP ALB we need to select atleast two private subnets
