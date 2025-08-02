@@ -142,7 +142,7 @@ resource "aws_autoscaling_group" "bar" { # Newly created instances will be attac
   health_check_grace_period = 60 # 60 seconds
   health_check_type         = "ELB"
   desired_capacity          = 1 # 1 instance
-  target_group_arns = [aws_lb_target_group.backend.arn] # deploying  backend instance target group
+  target_group_arns = [aws_lb_target_group.backend.arn] # deploying  backend instances to the target group of app ALB
     launch_template { #AutoScaling will take latest version 
     id      = aws_launch_template.backend.id #your launch template ID
     version = "$Latest"
