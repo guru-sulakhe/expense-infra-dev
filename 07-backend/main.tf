@@ -135,7 +135,7 @@ resource "aws_launch_template" "backend" {
   }
 }
 
-resource "aws_autoscaling_group" "bar" {
+resource "aws_autoscaling_group" "bar" { # Newly created instances will be attached to the targetGroup by AutoScalingGroup
   name                      = "${var.project_name}-${var.environment}-${var.common_tags.Component}"
   max_size                  = 5 # 5 instances
   min_size                  = 1 # 1 instance
@@ -203,7 +203,7 @@ resource "aws_lb_listener_rule" "static" {
 
   condition {
     host_header {
-      values = ["backend.app-${var.environment}.${var.zone_name}"] # backend.app-dev.guru97s.cloud
+      values = ["backend.app-${var.environment}.${var.zone_name}"] # request will be sent to backend.app-dev.guru97s.cloud backend-server
     }
   }
 }
