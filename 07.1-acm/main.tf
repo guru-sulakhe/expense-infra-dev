@@ -1,3 +1,8 @@
+# In order to host the Public Load Balancer with the HTTPS port, we should need to create an ACM certificate in order to 
+# host an HTTPS Port Domain Name.
+# 1. Create an ACM certificate with DNS Name
+# 2. Create Route 53 Record with including zone ID for the ACM certificate
+# 3. Create Validations for the ACM certificate
 resource "aws_acm_certificate" "expense" {
   domain_name       = "*.guru97s.cloud"
   validation_method = "DNS"
